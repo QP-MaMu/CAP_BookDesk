@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml">
+        <edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="BookDesk" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="Office" EntityType="BookDesk.Office">
+                    <NavigationPropertyBinding Path="desks" Target="Desk"/>
+                </EntitySet>
+                <EntitySet Name="Desk" EntityType="BookDesk.Desk">
+                    <NavigationPropertyBinding Path="office" Target="Office"/>
+                    <NavigationPropertyBinding Path="bookings" Target="Booking"/>
+                </EntitySet>
+                <EntitySet Name="Booking" EntityType="BookDesk.Booking">
+                    <NavigationPropertyBinding Path="office" Target="Office"/>
+                    <NavigationPropertyBinding Path="desk" Target="Desk"/>
+                </EntitySet>
+            </EntityContainer>
+            <EntityType Name="Office">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="name" Type="Edm.String"/>
+                <Property Name="street" Type="Edm.String"/>
+                <Property Name="town" Type="Edm.String"/>
+                <Property Name="country" Type="Edm.String"/>
+                <NavigationProperty Name="desks" Type="Collection(BookDesk.Desk)" Partner="office"/>
+            </EntityType>
+            <EntityType Name="Desk">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+                <NavigationProperty Name="office" Type="BookDesk.Office" Partner="desks">
+                    <ReferentialConstraint Property="office_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="office_ID" Type="Edm.Int32"/>
+                <Property Name="name" Type="Edm.String"/>
+                <NavigationProperty Name="bookings" Type="Collection(BookDesk.Booking)" Partner="desk"/>
+            </EntityType>
+            <EntityType Name="Booking">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <NavigationProperty Name="office" Type="BookDesk.Office">
+                    <ReferentialConstraint Property="office_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="office_ID" Type="Edm.Int32"/>
+                <NavigationProperty Name="desk" Type="BookDesk.Desk" Partner="bookings">
+                    <ReferentialConstraint Property="desk_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="desk_ID" Type="Edm.Int32"/>
+                <Property Name="user" Type="Edm.String"/>
+                <Property Name="date" Type="Edm.Date"/>
+            </EntityType>
+            <Annotations Target="BookDesk.EntityContainer/Office">
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.InsertRestrictions">
+                    <Record Type="Capabilities.InsertRestrictionsType">
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.UpdateRestrictions">
+                    <Record Type="Capabilities.UpdateRestrictionsType">
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="BookDesk.Office/ID">
+                <Annotation Term="Common.Label" String="Office ID"/>
+            </Annotations>
+            <Annotations Target="BookDesk.Office/name">
+                <Annotation Term="Common.Label" String="Name"/>
+            </Annotations>
+            <Annotations Target="BookDesk.Office/street">
+                <Annotation Term="Common.Label" String="Street"/>
+            </Annotations>
+            <Annotations Target="BookDesk.Office/town">
+                <Annotation Term="Common.Label" String="Town"/>
+            </Annotations>
+            <Annotations Target="BookDesk.Office/country">
+                <Annotation Term="Common.Label" String="Country"/>
+            </Annotations>
+            <Annotations Target="BookDesk.EntityContainer/Desk">
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.InsertRestrictions">
+                    <Record Type="Capabilities.InsertRestrictionsType">
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.UpdateRestrictions">
+                    <Record Type="Capabilities.UpdateRestrictionsType">
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="BookDesk.Desk/ID">
+                <Annotation Term="Common.Label" String="Desk ID"/>
+            </Annotations>
+            <Annotations Target="BookDesk.Desk/name">
+                <Annotation Term="Common.Label" String="Name"/>
+            </Annotations>
+            <Annotations Target="BookDesk.Booking/createdAt">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                </Annotations>
+                <Annotations Target="BookDesk.Booking/createdBy">
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="Core.Immutable" Bool="true"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                        </Annotations>
+                        <Annotations Target="BookDesk.Booking/modifiedAt">
+                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                            <Annotation Term="Core.Computed" Bool="true"/>
+                            <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                            </Annotations>
+                            <Annotations Target="BookDesk.Booking/modifiedBy">
+                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                <Annotation Term="Core.Computed" Bool="true"/>
+                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                    <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                    </Annotations>
+                                    <Annotations Target="BookDesk.Booking/user">
+                                        <Annotation Term="Common.Label" String="User"/>
+                                    </Annotations>
+                                    <Annotations Target="BookDesk.Booking/date">
+                                        <Annotation Term="Common.Label" String="Date"/>
+                                    </Annotations>
+                                </Schema>
+                            </edmx:DataServices>
+                        </edmx:Edmx>

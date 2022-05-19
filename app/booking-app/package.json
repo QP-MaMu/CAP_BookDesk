@@ -1,0 +1,38 @@
+{
+  "name": "bookingapp.bookingapp",
+  "version": "0.0.1",
+  "description": "A Fiori application.",
+  "keywords": [
+    "ui5",
+    "openui5",
+    "sapui5"
+  ],
+  "main": "webapp/index.html",
+  "scripts": {
+    "deploy-config_old": "npx -p @sap/ux-ui5-tooling fiori add deploy-config cf",
+    "start": "fiori run --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#bookingappbookingapp-display\"",
+    "start-local": "fiori run --config ./ui5-local.yaml --open \"test/flpSandboxMockServer.html?sap-ui-xx-viewCache=false#bookingappbookingapp-display\"",
+    "start-noflp": "fiori run --open \"index.html?sap-ui-xx-viewCache=false\"",
+    "start-variants-management": "fiori run --open \"preview.html?sap-ui-xx-viewCache=false&fiori-tools-rta-mode=true&sap-ui-rta-skip-flex-validation=true#preview-app\"",
+    "build": "ui5 build -a --clean-dest --include-task=generateManifestBundle generateCachebusterInfo",
+    "deploy": "fiori verify",
+    "deploy-config": "fiori add deploy-config",
+    "start-mock": "fiori run --config ./ui5-mock.yaml --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#bookingappbookingapp-display\""
+  },
+  "devDependencies": {
+    "@ui5/cli": "^2.14.1",
+    "@ui5/fs": "^2.0.6",
+    "@ui5/logger": "^2.0.1",
+    "@sap/ux-ui5-tooling": "1",
+    "rimraf": "3.0.2",
+    "@sap/ux-ui5-fe-mockserver-middleware": "1"
+  },
+  "private": true,
+  "sapuxLayer": "CUSTOMER_BASE",
+  "ui5": {
+    "dependencies": [
+      "@sap/ux-ui5-tooling",
+      "@sap/ux-ui5-fe-mockserver-middleware"
+    ]
+  }
+}

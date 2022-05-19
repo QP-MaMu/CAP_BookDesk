@@ -1,0 +1,48 @@
+<mvc:View
+    controllerName="bookingapp.bookingapp.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+>
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page" title="{i18n>title}">
+                  <content>
+                    <Button text="new Button"/>
+                     <Table items="{path: '/Office', templateShareable:true}">
+                            <columns>
+                                <Column >
+                                    <Text text="ID" />
+                                </Column>
+                                <Column>
+                                    <Text text="Name" />
+                                </Column>
+                                <Column>
+                                    <Text text="Street" />
+                                </Column>
+                                <Column>
+                                    <Text text="Town" />
+                                </Column>
+                                <Column>
+                                    <Text text="Country" />
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem>
+                                    <cells>
+                                        <Text text="{ID}"/>
+                                        <Text text="{name}"/>
+                                        <Text text="{street}"/>
+                                        <Text text="{town}"/>
+                                        <Text text="{country}"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+			            </Table>
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>
